@@ -8,12 +8,12 @@ import SucessComp from './SucessComp.jsx';
 
 const CreateBlog = ({ loginUser }) => {
 
-  // useEffect( ()=> {
+  useEffect(() => {
 
-  //   if (loginUser.Role != 'writer') {
-  //     navigate('/blogs');
-  //   }
-  // },[])
+    if (loginUser.Role != 'writer') {
+      navigate('/blogs');
+    }
+  }, [])
 
   const navigate = useNavigate();
   const [buttonStatus, setButtonStatus] = useState(false);
@@ -72,7 +72,7 @@ const CreateBlog = ({ loginUser }) => {
               className='p-1 w-5/6 bg-transparent border-4 border-zinc-600 outline-none rounded-xl text-center'
               value={title}
               placeholder="Enter blog title"
-              spellcheck="false"
+              spellCheck="false"
               maxLength={100}
               required
               onChange={(e) => setTitle(e.target.value)}
@@ -86,7 +86,7 @@ const CreateBlog = ({ loginUser }) => {
               className='p-1 w-5/6 bg-transparent border-4 border-zinc-600 outline-none rounded-xl text-center  resize-none'
               value={content}
               placeholder="Write your blog content..."
-              spellcheck="false"
+              spellCheck="false"
               minLength={300}
               required
               onChange={(e) => setContent(e.target.value)}

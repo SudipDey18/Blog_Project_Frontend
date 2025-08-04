@@ -26,7 +26,8 @@ function App() {
   const [loginUser, setLoginUser] = useState({
     Name: '',
     Email: '',
-    Role: ''
+    Role: '',
+    UserId: null
   });
 
   useEffect( () => {
@@ -39,14 +40,14 @@ function App() {
           console.log(cookieData.Error);
         }else {
           const apiData = (await (isLogin(cookieData))).data;
-          // console.log(apiData.User);
           
           if (apiData.isLogin) {
             setLoginStatus(true);
             setLoginUser({
               Name: apiData.User.Name,
               Email: apiData.User.Email,
-              Role: apiData.User.Role
+              Role: apiData.User.Role,
+              UserId: apiData.User.UserId
             });
           }
         }
@@ -78,7 +79,7 @@ function App() {
       path: '/blogs',
       element: <>
         <NavBar loginUser = {loginUser} loginStatus = {loginStatus} />
-        <Blogs/>
+        <Blogs loginUser = {loginUser}/>
       </>
     },
     {
