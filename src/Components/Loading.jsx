@@ -6,7 +6,7 @@ const Loading = ({ loadingMessage }) => {
         <>
             <div className=" bg-zinc-900 text-white h-screen flex items-center justify-center">
                 <div className="text-center">
-                    <div className="text-5xl font-semibold mb-10 text-sky-300">Loading...</div>
+                    <div className="text-5xl font-semibold mb-10 text-sky-300">{Message}</div>
                     <div className="flex justify-center space-x-4">
                         <div className="w-10 h-10 bg-violet-600 rounded-full animate-bounce animation-delay-0"></div>
                         <div className="w-10 h-10 bg-violet-600 rounded-full animate-bounce animation-delay-200"></div>

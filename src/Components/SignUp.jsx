@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createUser } from '../Api.jsx'
 import { Link, useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
 import Loading from './Loading.jsx';
 import ErrorComp from './ErrorComp.jsx';
 import SucessComp from './SucessComp.jsx';
@@ -21,12 +20,10 @@ const SignUp = ({ loginStatus }) => {
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
     const [gender, setGender] = useState('');
+    const [status, setStatus] = useState({ isLoading: false, isSucess: false, isError: false , message: ""});
+    let res = {};
 
-    const createUserMutation = useMutation({
-        mutationFn: createUser
-    })
-
-    const handelSubmit = (e) => {
+    const handelSubmit = async (e) => {
         e.preventDefault();
         const formData = {
             "Name": name,
@@ -35,23 +32,29 @@ const SignUp = ({ loginStatus }) => {
             "Role": role,
             "Gender": gender
         }
-        createUserMutation.mutate(formData);
+        setStatus({ ...status, isLoading: true });
+        res = await createUser(formData);
+        
+        if (res.status === 201) {
+            setStatus({ ...status, message: res.data.Message, isLoading: false, isSucess: true });
+        }else{
+            setStatus({ ...status, message: res.data.Message, isLoading: false, isError: true });
+        }
+
     }
 
-    if (createUserMutation.isPending) {
-        return (<Loading loadingMessage="User Creating" />)
+    if (status.isLoading) {
+        return (<Loading loadingMessage="User Creating..." />)
     }
 
-    if (createUserMutation.isSuccess) {
+    if (status.isSucess) {
         return (
-            <SucessComp SucessMessage={createUserMutation.data.data.Message} />
+            <SucessComp SucessMessage={status.message} />
         )
     }
 
-    if (createUserMutation.isError) {
-        console.log(createUserMutation.error);
-
-        return (<ErrorComp errorMessage={createUserMutation.error?.response.data.Message ?? createUserMutation.error.message} code={createUserMutation.error?.status ?? 404} />)
+    if (status.isError) {
+        return (<ErrorComp errorMessage={status.message} code={res?.status ?? 404} />)
     }
 
     return (
