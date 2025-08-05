@@ -18,9 +18,10 @@ const Blogs = ({ loginUser }) => {
     let apiData;
 
     const likeFunction = async (Data) => {
+        // console.log(Data);
+        
         if (loginUser?.UserId) {
             let apiData = await likeUpdate({ BlogLikes: Data.Likes, BlogId: Data.BlogId, UserId: loginUser.UserId });
-            // console.log(apiData);
 
             if (apiData.data?.Blogs) {
                 setBlogs(apiData.data.Blogs);
@@ -33,18 +34,13 @@ const Blogs = ({ loginUser }) => {
 
     const getBlogs = async () => {
         let res = await viewBlogs();
-        // console.log(res);
-        setBlogs(res.data?.Blogs);
+        setBlogs(res.data.Blogs);
         setBlogsLoading(false);
     }
 
     useEffect(() => {
         getBlogs();
     }, []);
-
-    // useEffect(() => {
-    //     console.log(blogs);
-    // }, [blogs]);
 
 
     const handelReadMore = (id) => {
@@ -77,7 +73,7 @@ const Blogs = ({ loginUser }) => {
                                         color: element.Likes.includes(loginUser.UserId) ? 'red' : "white"
                                     }} />
                                 </button>
-                                <div className="">{JSON.parse(element.Likes).length}</div>
+                                <div className="">{typeof element.Likes === 'string' ? JSON.parse(element.Likes).length : element.Likes.length}</div>
                             </div>
                             <div className='flex items-center'><FaShareAlt className='size-6' onClick={ () => {
                                 setShareData({title: element.Title, url:`${currentUrl}/blog/${element.BlogId}`});

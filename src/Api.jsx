@@ -1,7 +1,6 @@
 import axios from "axios";
 
-// const api_url = `https://blog-project-backend-is3l.onrender.com`;
-const api_url = `http://localhost:3018`;
+const api_url = import.meta.env.API_URL || `http://localhost:3018`;
 
 export const isLogin = (data)=> axios.get(`${api_url}/user/verify/${data.Token}`);
 export const createUser = (data)=> {return axios.post(`${api_url}/user/signup`,data)}
