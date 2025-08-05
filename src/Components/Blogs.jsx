@@ -9,7 +9,7 @@ import SocialShare from './Share.jsx';
 
 const Blogs = ({ loginUser }) => {
     const navigate = useNavigate();
-    const currentUrl = window.location.protocol +"//"+ window.location.host;
+    const currentUrl = window.location.protocol + "//" + window.location.host;
     const [blogs, setBlogs] = useState([]);
     const [page, setPage] = useState(false);
     const [blogsLoading, setBlogsLoading] = useState(true);
@@ -18,9 +18,10 @@ const Blogs = ({ loginUser }) => {
     let apiData;
 
     const likeFunction = async (Data) => {
+        // console.log(Data);
+
         if (loginUser?.UserId) {
             let apiData = await likeUpdate({ BlogLikes: Data.Likes, BlogId: Data.BlogId, UserId: loginUser.UserId });
-            // console.log(apiData);
 
             if (apiData.data?.Blogs) {
                 setBlogs(apiData.data.Blogs);
@@ -33,18 +34,13 @@ const Blogs = ({ loginUser }) => {
 
     const getBlogs = async () => {
         let res = await viewBlogs();
-        // console.log(res);
-        setBlogs(res.data?.Blogs);
+        setBlogs(res.data.Blogs);
         setBlogsLoading(false);
     }
 
     useEffect(() => {
         getBlogs();
     }, []);
-
-    // useEffect(() => {
-    //     console.log(blogs);
-    // }, [blogs]);
 
 
     const handelReadMore = (id) => {
@@ -77,12 +73,26 @@ const Blogs = ({ loginUser }) => {
                                         color: element.Likes.includes(loginUser.UserId) ? 'red' : "white"
                                     }} />
                                 </button>
-                                <div className="">{JSON.parse(element.Likes).length}</div>
+                                <div className="">{(() => {
+                                    try {
+                                        if (typeof element.Likes === 'string') {
+                                            const parsed = JSON.parse(element.Likes);
+                                            return Array.isArray(parsed) ? parsed.length : 0;
+                                        } else if (Array.isArray(element.Likes)) {
+                                            return element.Likes.length;
+                                        } else {
+                                            return 0;
+                                        }
+                                    } catch (e) {
+                                        console.error("Failed to parse Likes:", e);
+                                        return 0;
+                                    }
+                                })()}</div>
                             </div>
-                            <div className='flex items-center'><FaShareAlt className='size-6' onClick={ () => {
-                                setShareData({title: element.Title, url:`${currentUrl}/blog/${element.BlogId}`});
+                            <div className='flex items-center'><FaShareAlt className='size-6' onClick={() => {
+                                setShareData({ title: element.Title, url: `${currentUrl}/blog/${element.BlogId}` });
                                 setShare(true);
-                            }}/></div>
+                            }} /></div>
                         </div>
                     </div>
                 ))}
