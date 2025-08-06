@@ -17,6 +17,7 @@ import { isLogin } from './Api.jsx';
 import { getCookie } from './Cookie/Cookie.js';
 import Logout from './Components/Logout.jsx';
 import ReadMore from './Components/ReadMore.jsx';
+import Readme from "./Components/Readme.jsx";
 
 const queryClient = new QueryClient();
 
@@ -103,6 +104,13 @@ function App() {
     {
       path: '/nav',
       element: <NavBar  loginUser = {loginUser} loginStatus = {loginStatus} />
+    },
+    {
+      path: '/demo',
+      element: <>
+        {/* <NavBar loginUser = {loginUser} loginStatus = {loginStatus} /> */}
+        <Readme loginUser = {loginUser}/>
+      </>
     },
   ])
 

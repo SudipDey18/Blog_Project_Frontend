@@ -1,6 +1,7 @@
 import axios from "axios";
+import { config } from './config';
 
-const api_url = import.meta.env.API_URL || `http://localhost:3018`;
+const api_url =  config.API_URL || `http://localhost:3018`;
 
 export const isLogin = (data)=> axios.get(`${api_url}/user/verify/${data.Token}`);
 export const createUser = (data)=> {return axios.post(`${api_url}/user/signup`,data)}
@@ -9,3 +10,4 @@ export const createBlog = (data)=> {return axios.post(`${api_url}/blogs/create`,
 export const viewBlogs = ()=> {return axios.get(`${api_url}/blogs/view`)}
 export const blogData = (id) => {return axios.get(`${api_url}/blogs/blog/'${id}'`)}
 export const likeUpdate = (data) => {return axios.put(`${api_url}/blogs/blog/like`,data)}
+export const deleteBlog = (data) => {return axios.post(`${api_url}/blogs/blog/delete`,data)}
