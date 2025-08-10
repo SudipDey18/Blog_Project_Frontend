@@ -17,12 +17,12 @@ import { isLogin } from './Api.jsx';
 import { getCookie } from './Cookie/Cookie.js';
 import Logout from './Components/Logout.jsx';
 import ReadMore from './Components/ReadMore.jsx';
-import Readme from "./Components/Readme.jsx";
+import ForgotPassword from "./Components/ForgotPassword.jsx";
 
 const queryClient = new QueryClient();
 
 function App() {
-  
+
   const [loginStatus, setLoginStatus] = useState(false);
   const [loginUser, setLoginUser] = useState({
     Name: '',
@@ -31,17 +31,17 @@ function App() {
     UserId: null
   });
 
-  useEffect( () => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const cookieData = await getCookie();
         // console.log(cookieData);
-        
+
         if (cookieData.Error) {
           console.log(cookieData.Error);
-        }else {
+        } else {
           const apiData = (await (isLogin(cookieData))).data;
-          
+
           if (apiData.isLogin) {
             setLoginStatus(true);
             setLoginUser({
@@ -52,7 +52,7 @@ function App() {
             });
           }
         }
-        
+
       } catch (error) {
         console.log(error);
       }
@@ -65,53 +65,49 @@ function App() {
     {
       path: '/',
       element: <>
-        <NavBar loginUser = {loginUser} loginStatus = {loginStatus} />
-        <Login setLoginStatus = {setLoginStatus} loginStatus = {loginStatus} loginUserData={loginUser}/>
+        <NavBar loginUser={loginUser} loginStatus={loginStatus} />
+        <Login setLoginStatus={setLoginStatus} loginStatus={loginStatus} loginUserData={loginUser} />
       </>
     },
     {
       path: '/createUser',
       element: <>
-        <NavBar loginUser = {loginUser} loginStatus = {loginStatus} />
-        <SignUp loginStatus = {loginStatus}/>
+        <NavBar loginUser={loginUser} loginStatus={loginStatus} />
+        <SignUp loginStatus={loginStatus} />
       </>
     },
     {
       path: '/blogs',
       element: <>
-        <NavBar loginUser = {loginUser} loginStatus = {loginStatus} />
-        <Blogs loginUser = {loginUser}/>
+        <NavBar loginUser={loginUser} loginStatus={loginStatus} />
+        <Blogs loginUser={loginUser} />
       </>
     },
     {
       path: '/createBlog',
       element: <>
-        <NavBar loginUser = {loginUser} loginStatus = {loginStatus} />
-        <CreateBlog loginUser = {loginUser}/>
+        <NavBar loginUser={loginUser} loginStatus={loginStatus} />
+        <CreateBlog loginUser={loginUser} />
       </>
     },
     {
       path: '/logout',
       element: <>
-        <NavBar  loginUser = {loginUser} loginStatus = {loginStatus} />
-        <Logout setLoginStatus = {setLoginStatus} setLoginUser = {setLoginUser} loginStatus = {loginStatus} />
+        <NavBar loginUser={loginUser} loginStatus={loginStatus} />
+        <Logout setLoginStatus={setLoginStatus} setLoginUser={setLoginUser} loginStatus={loginStatus} />
+      </>
+    },
+    {
+      path: '/forgotpass',
+      element: <>
+        <NavBar loginUser={loginUser} loginStatus={loginStatus} />
+        <ForgotPassword loginStatus={loginStatus} />
       </>
     },
     {
       path: '/blog/:Id',
-      element: <ReadMore/>
-    },
-    {
-      path: '/nav',
-      element: <NavBar  loginUser = {loginUser} loginStatus = {loginStatus} />
-    },
-    {
-      path: '/demo',
-      element: <>
-        {/* <NavBar loginUser = {loginUser} loginStatus = {loginStatus} /> */}
-        <Readme loginUser = {loginUser}/>
-      </>
-    },
+      element: <ReadMore />
+    }
   ])
 
   return (

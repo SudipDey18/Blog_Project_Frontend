@@ -76,7 +76,7 @@ const Blogs = ({ loginUser }) => {
                             <h2 className="font-serif text-2xl text-blue-600 ">{element.Title}</h2>
                         </div>
                         <div className="w-11/12 h-12 overflow-hidden font-mono" id="content">{removeMd(element.Content.replace(/\\n/g, '\n'))}</div>
-                        <div className='flex gap-10 w-full sm:w-2/4 justify-center'>
+                        <div className='flex w-full sm:w-2/4 justify-around'>
                             <button className="bg-violet-700 hover:bg-violet-900 p-2 min-w-[100px] w-3/6 sm:w-2/6 border-2 border-slate-800 rounded-2xl" onClick={() => handelReadMore(element.BlogId)} >Read More</button>
                             <div className='flex items-center'>
                                 <button className="text-3xl disabled:opacity-20 " onClick={() => { setLikeLoading(element.BlogId); handelLike({ Likes: element.Likes, BlogId: element.BlogId }) }}
