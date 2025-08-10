@@ -41,7 +41,7 @@ const ReadMore = () => {
                 <p className="text-zinc-400 text-lg font-mono pt-3">Written By: <span className='hover:text-blue-800'>{blog.Name}</span></p>
             </div>
             <h1 className='font-serif text-2xl text-blue-600 w-[95%]'>{blog.Title}</h1>
-            <div className="w-full md:p-10 font-mono text-slate-200">
+            <div className="w-full md:p-10 font-mono text-slate-200" data-color-mode="dark">
                 {/* <p className="blog-content">{blog.Content}</p> */}
                 <MDEditor.Markdown
                     source={blog.Content?.replace(/\\n/g, '\n')}
